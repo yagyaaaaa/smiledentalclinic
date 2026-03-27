@@ -100,7 +100,7 @@ export default function Navbar() {
         {menuOpen && (
           <div
             id="mobile-menu"
-            className="lg:hidden border-t border-gray-100 py-3 pb-4"
+            className="lg:hidden border-t border-gray-100 py-3 pb-4 animate-slide-down"
           >
             <ul className="flex flex-col gap-1" role="list">
               {navLinks.map(({ path, label }) => (

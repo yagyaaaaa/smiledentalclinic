@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useInView } from '../hooks/useInView'
 
 const services = [
   {
@@ -121,6 +122,16 @@ const colorMap = {
   },
 }
 
+/** Wraps a service article so it fades in when scrolled into view. */
+function AnimatedServiceItem({ children }) {
+  const { ref, inView } = useInView()
+  return (
+    <div ref={ref} className={inView ? 'animate-fade-in-up' : 'opacity-0'}>
+      {children}
+    </div>
+  )
+}
+
 export default function Services() {
   const [activeCategory, setActiveCategory] = useState('All')
 
@@ -133,13 +144,13 @@ export default function Services() {
       {/* Page Hero */}
       <section className="bg-gradient-to-br from-blue-50 to-teal-50 pt-28 pb-16" aria-labelledby="services-hero-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-block bg-blue-100 text-[#007bff] text-sm font-medium px-3 py-1 rounded-full mb-4">
+          <div className="inline-block bg-blue-100 text-[#007bff] text-sm font-medium px-3 py-1 rounded-full mb-4 animate-fade-in-up">
             Our Services
           </div>
-          <h1 id="services-hero-heading" className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+          <h1 id="services-hero-heading" className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 animate-fade-in-up anim-delay-150">
             Comprehensive Dental Care
           </h1>
-          <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+          <p className="text-gray-600 text-lg max-w-3xl mx-auto animate-fade-in-up anim-delay-225">
             From routine cleanings to full smile transformations — Dr. Hetal Chheda and her team offer a complete range of dental services at Smile Gallery.
           </p>
         </div>
@@ -175,11 +186,11 @@ export default function Services() {
             const c = colorMap[color]
             const isEven = index % 2 === 0
             return (
-              <article
-                key={id}
-                id={id}
-                className={`grid lg:grid-cols-2 gap-10 lg:gap-16 items-center ${isEven ? '' : 'lg:grid-flow-dense'}`}
-              >
+              <AnimatedServiceItem key={id}>
+                <article
+                  id={id}
+                  className={`grid lg:grid-cols-2 gap-10 lg:gap-16 items-center ${isEven ? '' : 'lg:grid-flow-dense'}`}
+                >
                 {/* Image */}
                 <div className={`${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
                   <div className="rounded-3xl overflow-hidden shadow-xl">
@@ -223,13 +234,14 @@ export default function Services() {
                   </Link>
                 </div>
               </article>
+              </AnimatedServiceItem>
             )
           })}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-14 bg-gradient-to-r from-[#007bff] to-[#17a2b8]" aria-labelledby="services-cta-heading">
+      <section className="py-14 animate-gradient-bg" aria-labelledby="services-cta-heading">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 id="services-cta-heading" className="text-3xl font-bold text-white mb-4">
             Not Sure Which Treatment You Need?

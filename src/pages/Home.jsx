@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useInView } from '../hooks/useInView'
 
 const PHONE_DISPLAY = '098193 00553'
 const PHONE = '09819300553'
@@ -96,6 +97,12 @@ const services = [
 ]
 
 export default function Home() {
+  const { ref: statsRef,    inView: statsInView    } = useInView()
+  const { ref: servicesRef, inView: servicesInView } = useInView()
+  const { ref: whyRef,      inView: whyInView      } = useInView()
+  const { ref: doctorRef,   inView: doctorInView   } = useInView()
+  const { ref: ctaRef,      inView: ctaInView      } = useInView()
+
   return (
     <>
       {/* Hero Section */}
@@ -106,24 +113,24 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left content */}
           <div>
-            <div className="inline-flex items-center gap-2 bg-blue-100 text-[#007bff] text-sm font-medium px-3 py-1.5 rounded-full mb-6">
+            <div className="inline-flex items-center gap-2 bg-blue-100 text-[#007bff] text-sm font-medium px-3 py-1.5 rounded-full mb-6 animate-fade-in-up">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
               </svg>
               4.9 Stars · 202+ Google Reviews
             </div>
 
-            <h1 id="hero-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+            <h1 id="hero-heading" className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6 animate-fade-in-up anim-delay-150">
               Your Perfect{' '}
               <span className="text-[#007bff]">Smile</span>{' '}
               Starts Here
             </h1>
 
-            <p className="text-lg text-gray-600 leading-relaxed mb-8 max-w-xl">
+            <p className="text-lg text-gray-600 leading-relaxed mb-8 max-w-xl animate-fade-in-up anim-delay-225">
               Expert dental care by <strong className="text-gray-800">Dr. Hetal Chheda</strong> at Smile Gallery Dental Clinic &amp; Implant Center, Borivali West. From implants to cosmetic dentistry — we deliver smiles you'll love.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-10">
+            <div className="flex flex-col sm:flex-row gap-4 mb-10 animate-fade-in-up anim-delay-300">
               <Link
                 to="/contact"
                 className="inline-flex items-center justify-center gap-2 bg-[#007bff] hover:bg-[#0056b3] text-white font-semibold px-8 py-4 rounded-full text-base transition-all duration-200 shadow-lg hover:shadow-xl"
@@ -144,7 +151,7 @@ export default function Home() {
               </a>
             </div>
 
-            <div className="flex flex-wrap gap-3 text-sm text-gray-500">
+            <div className="flex flex-wrap gap-3 text-sm text-gray-500 animate-fade-in-up anim-delay-375">
               <span className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-green-500" aria-hidden="true"></span>
                 Open until 9 PM
@@ -159,7 +166,7 @@ export default function Home() {
           </div>
 
           {/* Right image */}
-          <div className="relative">
+          <div className="relative animate-fade-in-right anim-delay-150">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <img
                 src="https://images.unsplash.com/photo-1588776814546-daab30f310ce?w=800&q=80"
@@ -170,7 +177,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#007bff]/20 to-transparent"></div>
             </div>
             {/* Floating badge */}
-            <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-4 border border-blue-100">
+            <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-4 border border-blue-100 animate-float">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full bg-[#007bff] flex items-center justify-center">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -190,9 +197,13 @@ export default function Home() {
       {/* Stats */}
       <section className="bg-[#007bff] py-10 lg:py-14" aria-label="Clinic statistics">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <dl className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {stats.map(({ value, label }) => (
-              <div key={label} className="text-center">
+          <dl ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {stats.map(({ value, label }, i) => (
+              <div
+                key={label}
+                className={`text-center ${statsInView ? 'animate-fade-in-up' : 'opacity-0'}`}
+                style={statsInView ? { animationDelay: `${i * 100}ms` } : undefined}
+              >
                 <dt className="text-3xl lg:text-4xl font-bold text-white mb-1">{value}</dt>
                 <dd className="text-blue-100 text-sm">{label}</dd>
               </div>
@@ -216,9 +227,13 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {services.map(({ title, desc, img, alt }) => (
-              <article key={title} className="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+          <div ref={servicesRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {services.map(({ title, desc, img, alt }, i) => (
+              <article
+                key={title}
+                className={`group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ${servicesInView ? 'animate-fade-in-up' : 'opacity-0'}`}
+                style={servicesInView ? { animationDelay: `${i * 100}ms` } : undefined}
+              >
                 <div className="overflow-hidden h-48">
                   <img
                     src={img}
@@ -271,9 +286,13 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {whyChooseUs.map(({ icon, title, desc }) => (
-              <div key={title} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+          <div ref={whyRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {whyChooseUs.map(({ icon, title, desc }, i) => (
+              <div
+                key={title}
+                className={`bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300 ${whyInView ? 'animate-fade-in-up' : 'opacity-0'}`}
+                style={whyInView ? { animationDelay: `${i * 100}ms` } : undefined}
+              >
                 <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#007bff] flex items-center justify-center mb-4">
                   {icon}
                 </div>
@@ -287,8 +306,8 @@ export default function Home() {
 
       {/* Doctor Overview */}
       <section className="py-16 lg:py-24 bg-white" aria-labelledby="doctor-heading">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
-          <div className="order-2 lg:order-1">
+        <div ref={doctorRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+          <div className={`order-2 lg:order-1 ${doctorInView ? 'animate-fade-in-left' : 'opacity-0'}`}>
             <div className="inline-block bg-teal-100 text-[#17a2b8] text-sm font-medium px-3 py-1 rounded-full mb-4">
               Meet Your Dentist
             </div>
@@ -326,10 +345,11 @@ export default function Home() {
               </svg>
             </Link>
           </div>
-          <div className="order-1 lg:order-2">
+          <div className={`order-1 lg:order-2 ${doctorInView ? 'animate-fade-in-right anim-delay-150' : 'opacity-0'}`}>
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+              {/* File: public/hetalchheda.jpg — served from the root by Vite */}
               <img
-                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80"
+                src="/hetalchheda.jpg"
                 alt="Dr. Hetal Chheda, dental surgeon at Smile Gallery Dental Clinic"
                 className="w-full h-[420px] lg:h-[500px] object-cover"
                 loading="lazy"
@@ -340,8 +360,11 @@ export default function Home() {
       </section>
 
       {/* CTA Banner */}
-      <section className="py-14 lg:py-20 bg-gradient-to-r from-[#007bff] to-[#17a2b8]" aria-labelledby="cta-heading">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-14 lg:py-20 animate-gradient-bg" aria-labelledby="cta-heading">
+        <div
+          ref={ctaRef}
+          className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center ${ctaInView ? 'animate-fade-in-up' : 'opacity-0'}`}
+        >
           <h2 id="cta-heading" className="text-3xl sm:text-4xl font-bold text-white mb-4">
             Ready to Transform Your Smile?
           </h2>

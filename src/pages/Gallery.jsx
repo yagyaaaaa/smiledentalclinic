@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useInView } from '../hooks/useInView'
 
 const galleryItems = [
   // Before & After
@@ -54,7 +55,7 @@ const galleryItems = [
   // Team
   {
     category: 'Team',
-    img: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=700&q=80',
+    img: '/hetalchheda.jpg',
     alt: 'Dr. Hetal Chheda, founder and principal dentist',
     label: 'Dr. Hetal Chheda',
   },
@@ -83,6 +84,7 @@ const categories = ['All', 'Before & After', 'Clinic', 'Team']
 export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [lightboxImg, setLightboxImg] = useState(null)
+  const { ref: gridRef, inView: gridInView } = useInView()
 
   const filtered = activeCategory === 'All'
     ? galleryItems
@@ -93,16 +95,16 @@ export default function Gallery() {
       {/* Page Hero */}
       <section className="bg-gradient-to-br from-blue-50 to-teal-50 pt-28 pb-16" aria-labelledby="gallery-hero-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-block bg-blue-100 text-[#007bff] text-sm font-medium px-3 py-1 rounded-full mb-4">
+          <div className="inline-block bg-blue-100 text-[#007bff] text-sm font-medium px-3 py-1 rounded-full mb-4 animate-fade-in-up">
             Gallery
           </div>
-          <h1 id="gallery-hero-heading" className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+          <h1 id="gallery-hero-heading" className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 animate-fade-in-up anim-delay-150">
             See the Results
           </h1>
-          <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+          <p className="text-gray-600 text-lg max-w-3xl mx-auto animate-fade-in-up anim-delay-225">
             Explore our clinic, before &amp; after transformations, and meet the team behind your smile.
           </p>
-          <p className="text-gray-500 text-sm mt-4 italic">
+          <p className="text-gray-500 text-sm mt-4 italic animate-fade-in-up anim-delay-300">
             * Placeholder images shown. Real clinic photos will be added shortly.
           </p>
         </div>
@@ -134,11 +136,12 @@ export default function Gallery() {
       {/* Grid */}
       <section className="py-12 lg:py-16 bg-white" aria-live="polite" aria-label="Gallery images">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filtered.map(({ img, alt, label, category }) => (
+          <div ref={gridRef} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {filtered.map(({ img, alt, label, category }, i) => (
               <button
                 key={img}
-                className="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#007bff] focus:ring-offset-2"
+                className={`group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#007bff] focus:ring-offset-2 ${gridInView ? 'animate-fade-in-up' : 'opacity-0'}`}
+                style={gridInView ? { animationDelay: `${i * 60}ms` } : undefined}
                 onClick={() => setLightboxImg({ img, alt, label, category })}
                 aria-label={`View larger: ${label}`}
               >

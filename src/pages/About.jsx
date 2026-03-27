@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useInView } from '../hooks/useInView'
 
 const milestones = [
   { year: '2012', event: 'Graduated BDS from a premier Mumbai dental college' },
@@ -49,18 +50,23 @@ const values = [
 ]
 
 export default function About() {
+  const { ref: profileRef,  inView: profileInView  } = useInView()
+  const { ref: valuesRef,   inView: valuesInView   } = useInView()
+  const { ref: timelineRef, inView: timelineInView } = useInView()
+  const { ref: clinicRef,   inView: clinicInView   } = useInView()
+
   return (
     <>
       {/* Page Hero */}
       <section className="bg-gradient-to-br from-blue-50 to-teal-50 pt-28 pb-16" aria-labelledby="about-hero-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-block bg-blue-100 text-[#007bff] text-sm font-medium px-3 py-1 rounded-full mb-4">
+          <div className="inline-block bg-blue-100 text-[#007bff] text-sm font-medium px-3 py-1 rounded-full mb-4 animate-fade-in-up">
             About Us
           </div>
-          <h1 id="about-hero-heading" className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+          <h1 id="about-hero-heading" className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 animate-fade-in-up anim-delay-150">
             Meet Dr. Hetal Chheda
           </h1>
-          <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+          <p className="text-gray-600 text-lg max-w-3xl mx-auto animate-fade-in-up anim-delay-225">
             Dedicated dental surgeon, founder of Smile Gallery Dental Clinic, and champion of inclusive, high-quality oral healthcare in Mumbai.
           </p>
         </div>
@@ -68,12 +74,13 @@ export default function About() {
 
       {/* Doctor Profile */}
       <section className="py-16 lg:py-24 bg-white" aria-labelledby="profile-heading">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <div ref={profileRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           {/* Photo */}
-          <div className="sticky top-24">
+          <div className={`sticky top-24 ${profileInView ? 'animate-fade-in-left' : 'opacity-0'}`}>
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+              {/* File: public/hetalchheda.jpg — served from the root by Vite */}
               <img
-                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80"
+                src="/hetalchheda.jpg"
                 alt="Dr. Hetal Chheda — Founder, Smile Gallery Dental Clinic &amp; Implant Center"
                 className="w-full h-[480px] object-cover object-top"
                 loading="lazy"
@@ -94,7 +101,7 @@ export default function About() {
           </div>
 
           {/* Bio Content */}
-          <div>
+          <div className={profileInView ? 'animate-fade-in-right anim-delay-150' : 'opacity-0'}>
             <h2 id="profile-heading" className="text-3xl font-bold text-gray-900 mb-2">Dr. Hetal Chheda</h2>
             <p className="text-[#17a2b8] font-medium mb-6">BDS · Founder &amp; Principal Dentist</p>
 
@@ -159,9 +166,13 @@ export default function About() {
               Every decision we make is grounded in these core principles.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map(({ icon, title, desc }) => (
-              <div key={title} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center">
+          <div ref={valuesRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {values.map(({ icon, title, desc }, i) => (
+              <div
+                key={title}
+                className={`bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center ${valuesInView ? 'animate-fade-in-up' : 'opacity-0'}`}
+                style={valuesInView ? { animationDelay: `${i * 100}ms` } : undefined}
+              >
                 <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#007bff] flex items-center justify-center mx-auto mb-4">
                   {icon}
                 </div>
@@ -184,9 +195,13 @@ export default function About() {
               Milestones &amp; Achievements
             </h2>
           </div>
-          <ol className="relative border-l-2 border-[#007bff]/20 space-y-8">
-            {milestones.map(({ year, event }) => (
-              <li key={year} className="ml-8">
+          <ol ref={timelineRef} className="relative border-l-2 border-[#007bff]/20 space-y-8">
+            {milestones.map(({ year, event }, i) => (
+              <li
+                key={year}
+                className={`ml-8 ${timelineInView ? 'animate-fade-in-left' : 'opacity-0'}`}
+                style={timelineInView ? { animationDelay: `${i * 100}ms` } : undefined}
+              >
                 <div className="absolute -left-3 w-6 h-6 rounded-full bg-[#007bff] border-4 border-white shadow flex items-center justify-center" aria-hidden="true"></div>
                 <time className="text-[#007bff] font-bold text-sm mb-1 block">{year}</time>
                 <p className="text-gray-700 text-sm leading-relaxed">{event}</p>
@@ -203,13 +218,17 @@ export default function About() {
             <h2 id="clinic-images-heading" className="text-3xl font-bold text-gray-900 mb-3">Our Clinic</h2>
             <p className="text-gray-600">A modern, welcoming space designed around your comfort.</p>
           </div>
-          <div className="grid sm:grid-cols-3 gap-4 lg:gap-6">
+          <div ref={clinicRef} className="grid sm:grid-cols-3 gap-4 lg:gap-6">
             {[
               { src: 'https://images.unsplash.com/photo-1629909615184-74f495363b67?w=700&q=80', alt: 'Smile Gallery dental clinic reception area' },
               { src: 'https://images.unsplash.com/photo-1629909615226-2aaecfb46a95?w=700&q=80', alt: 'Dental treatment room with modern equipment' },
               { src: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=700&q=80', alt: 'Clean and sterile dental operatory' },
-            ].map(({ src, alt }) => (
-              <div key={src} className="rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+            ].map(({ src, alt }, i) => (
+              <div
+                key={src}
+                className={`rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 ${clinicInView ? 'animate-fade-in-up' : 'opacity-0'}`}
+                style={clinicInView ? { animationDelay: `${i * 150}ms` } : undefined}
+              >
                 <img src={src} alt={alt} className="w-full h-56 object-cover" loading="lazy" />
               </div>
             ))}
