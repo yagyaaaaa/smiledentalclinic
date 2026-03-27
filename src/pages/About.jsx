@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useInView } from '../hooks/useInView'
+import { DENTIST_IMAGE_URL } from '../constants'
 
 const milestones = [
   { year: '2012', event: 'Graduated BDS from a premier Mumbai dental college' },
@@ -78,9 +79,8 @@ export default function About() {
           {/* Photo */}
           <div className={`sticky top-24 ${profileInView ? 'animate-fade-in-left' : 'opacity-0'}`}>
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-              {/* File: public/hetalchheda.jpg — served from the root by Vite */}
               <img
-                src="/hetalchheda.jpg"
+                src={DENTIST_IMAGE_URL}
                 alt="Dr. Hetal Chheda — Founder, Smile Gallery Dental Clinic &amp; Implant Center"
                 className="w-full h-[480px] object-cover object-top"
                 loading="lazy"

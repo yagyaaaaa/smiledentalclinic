@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useInView } from '../hooks/useInView'
+import { DENTIST_IMAGE_URL } from '../constants'
 
 const galleryItems = [
   // Before & After
@@ -55,7 +56,7 @@ const galleryItems = [
   // Team
   {
     category: 'Team',
-    img: '/hetalchheda.jpg',
+    img: DENTIST_IMAGE_URL,
     alt: 'Dr. Hetal Chheda, founder and principal dentist',
     label: 'Dr. Hetal Chheda',
   },
