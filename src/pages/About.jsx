@@ -78,9 +78,8 @@ export default function About() {
           {/* Photo */}
           <div className={`sticky top-24 ${profileInView ? 'animate-fade-in-left' : 'opacity-0'}`}>
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-              {/* File: public/hetalchheda.jpg — served from the root by Vite */}
               <img
-                src="/hetalchheda.jpg"
+                src="https://github.com/user-attachments/assets/6e5df7ac-e9bb-4c68-b578-8ce5191bba59"
                 alt="Dr. Hetal Chheda — Founder, Smile Gallery Dental Clinic &amp; Implant Center"
                 className="w-full h-[480px] object-cover object-top"
                 loading="lazy"

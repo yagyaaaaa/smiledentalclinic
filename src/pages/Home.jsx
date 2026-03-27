@@ -347,9 +347,8 @@ export default function Home() {
           </div>
           <div className={`order-1 lg:order-2 ${doctorInView ? 'animate-fade-in-right anim-delay-150' : 'opacity-0'}`}>
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-              {/* File: public/hetalchheda.jpg — served from the root by Vite */}
               <img
-                src="/hetalchheda.jpg"
+                src="https://github.com/user-attachments/assets/6e5df7ac-e9bb-4c68-b578-8ce5191bba59"
                 alt="Dr. Hetal Chheda, dental surgeon at Smile Gallery Dental Clinic"
                 className="w-full h-[420px] lg:h-[500px] object-cover"
                 loading="lazy"

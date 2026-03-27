@@ -55,7 +55,7 @@ const galleryItems = [
   // Team
   {
     category: 'Team',
-    img: '/hetalchheda.jpg',
+    img: 'https://github.com/user-attachments/assets/6e5df7ac-e9bb-4c68-b578-8ce5191bba59',
     alt: 'Dr. Hetal Chheda, founder and principal dentist',
     label: 'Dr. Hetal Chheda',
   },
