@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useInView } from '../hooks/useInView'
+import { DENTIST_IMAGE_URL } from '../constants'
 
 const PHONE_DISPLAY = '098193 00553'
 const PHONE = '09819300553'
@@ -348,7 +349,7 @@ export default function Home() {
           <div className={`order-1 lg:order-2 ${doctorInView ? 'animate-fade-in-right anim-delay-150' : 'opacity-0'}`}>
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src="https://github.com/user-attachments/assets/6e5df7ac-e9bb-4c68-b578-8ce5191bba59"
+                src={DENTIST_IMAGE_URL}
                 alt="Dr. Hetal Chheda, dental surgeon at Smile Gallery Dental Clinic"
                 className="w-full h-[420px] lg:h-[500px] object-cover"
                 loading="lazy"

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useInView } from '../hooks/useInView'
+import { DENTIST_IMAGE_URL } from '../constants'
 
 const milestones = [
   { year: '2012', event: 'Graduated BDS from a premier Mumbai dental college' },
@@ -79,7 +80,7 @@ export default function About() {
           <div className={`sticky top-24 ${profileInView ? 'animate-fade-in-left' : 'opacity-0'}`}>
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src="https://github.com/user-attachments/assets/6e5df7ac-e9bb-4c68-b578-8ce5191bba59"
+                src={DENTIST_IMAGE_URL}
                 alt="Dr. Hetal Chheda — Founder, Smile Gallery Dental Clinic &amp; Implant Center"
                 className="w-full h-[480px] object-cover object-top"
                 loading="lazy"
